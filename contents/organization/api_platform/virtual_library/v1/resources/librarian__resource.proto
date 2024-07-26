@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package organization.api_platform.virtual_library.v1;
+
+import "buf/validate/validate.proto";
+import "google/api/field_behavior.proto";
+import "google/api/resource.proto";
+import "google/protobuf/timestamp.proto";
+import "organization/api_platform/api/documentation_metadata.proto";
+import "organization/api_platform/api/field_validity.proto";
+
+option java_package = "com.organization.api_platform.virtual_library.v1";
+option java_multiple_files = true;
+option java_outer_classname = "LibrarianResourceProto";
+option go_package = "apis.organization.com/organization.api_platform.virtual_library.v1";
+
+// Represents an employee of a library
+message Librarian {
+  option (google.api.resource) = {
+    type: "apis.organization.com/virtual-library/Librarian"
+    pattern: "librarians/{librarian}"
+    name_field: "path"
+  };
+  option (organization.api_platform.api.documentation_metadata) = {
+    category: "people"
+  };
+
+  // The resource path of the librarian.
+  //
+  // Format: `librarians/{librarian}`
+  string path = 1 [
+    (organization.api_platform.api.field_validity).string = {
+      sample_values: "librarians/some-librarian-id"
+    },
+    (buf.validate.field).string = {
+      pattern: "(^librarians/(([a-z]([a-z0-9-]{0,61}[a-z0-9])?)|([A-Z][a-z]*-[A-Z][a-z]*))$)"
+    }
+  ];
+
+  // The timestamp when the librarian was created.
+  google.protobuf.Timestamp create_time = 2
+      [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // TODO: add fields to your resource
+}

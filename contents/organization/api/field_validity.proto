@@ -1,0 +1,401 @@
+syntax = "proto3";
+
+package organization.api_platform.api;
+
+import "google/protobuf/descriptor.proto";
+
+option java_multiple_files = true;
+option java_outer_classname = "FieldValidityProto";
+option java_package = "com.organization.api_platform.api";
+option go_package = "apis.organization.com/organization.api_platform.api";
+
+extend google.protobuf.FieldOptions {
+  // An object that contains extra metadata about an individual API method, like
+  // the resource a method is associated with.
+  FieldValidity field_validity = 10494;
+}
+
+// Provides information about the valid values for a field.
+message FieldValidity {
+  oneof type {
+    // Scalar Field Types
+    FloatRules float = 1;
+    DoubleRules double = 2;
+    Int32Rules int32 = 3;
+    Int64Rules int64 = 4;
+    UInt32Rules uint32 = 5;
+    UInt64Rules uint64 = 6;
+    SInt32Rules sint32 = 7;
+    SInt64Rules sint64 = 8;
+    Fixed32Rules fixed32 = 9;
+    Fixed64Rules fixed64 = 10;
+    SFixed32Rules sfixed32 = 11;
+    SFixed64Rules sfixed64 = 12;
+    StringRules string = 14;
+    BooleanRules bool = 15;
+  }
+}
+
+//
+// Numeric types
+//
+
+// Specifies the bound types of the range.
+enum BoundTypes {
+  UNKNOWN_BOUND_TYPES = 0;
+
+  // Both the min and max of the range are inclusive.
+  INCLUSIVE_INCLUSIVE = 1;
+
+  // The min is inclusive; the max is exclusive.
+  INCLUSIVE_EXCLUSIVE = 2;
+
+  // The min is exclusive; the max is inclusive.
+  EXCLUSIVE_INCLUSIVE = 3;
+
+  // Both the min and max of the range are exclusive.
+  EXCLUSIVE_EXCLUSIVE = 4;
+}
+
+// Validation information for float fields.
+message FloatRules {
+  // A human-readable description of the requirements on values of the field.
+  string description = 1;
+
+  // Sample valid values for the field.
+  //
+  // These may be used in documentation, generated sample code snippets, etc.
+  repeated float sample_values = 2;
+
+  message Range {
+    // The type of boundaries used for the range.
+    //
+    // If unspecified, defaults to INCLUSIVE_INCLUSIVE.
+    BoundTypes bound_types = 1;
+
+    // The minimum value of the range.
+    float min = 2;
+
+    // The maximum value of the range.
+    float max = 3;
+  }
+  // The valid ranges of values for the field.
+  repeated Range range = 3;
+}
+
+// Validation information for double fields.
+message DoubleRules {
+  // A human-readable description of the requirements on values of the field.
+  string description = 1;
+
+  // Sample valid values for the field.
+  //
+  // These may be used in documentation, generated sample code snippets, etc.
+  repeated double sample_values = 2;
+
+  message Range {
+    // The type of boundaries used for the range.
+    //
+    // If unspecified, defaults to INCLUSIVE_INCLUSIVE.
+    BoundTypes bound_types = 1;
+
+    // The minimum value of the range.
+    double min = 2;
+
+    // The maximum value of the range.
+    double max = 3;
+  }
+  // The valid ranges of values for the field.
+  repeated Range range = 3;
+}
+
+// Validation information for int32 fields.
+message Int32Rules {
+  // A human-readable description of the requirements on values of the field.
+  string description = 1;
+
+  // Sample valid values for the field.
+  //
+  // These may be used in documentation, generated sample code snippets, etc.
+  repeated int32 sample_values = 2;
+
+  message Range {
+    // The type of boundaries used for the range.
+    //
+    // If unspecified, defaults to INCLUSIVE_INCLUSIVE.
+    BoundTypes bound_types = 1;
+
+    // The minimum value of the range.
+    int32 min = 2;
+
+    // The maximum value of the range.
+    int32 max = 3;
+  }
+  // The valid ranges of values for the field.
+  repeated Range range = 3;
+}
+
+// Validation information for int64 fields.
+message Int64Rules {
+  // A human-readable description of the requirements on values of the field.
+  string description = 1;
+
+  // Sample valid values for the field.
+  //
+  // These may be used in documentation, generated sample code snippets, etc.
+  repeated int64 sample_values = 2;
+
+  message Range {
+    // The type of boundaries used for the range.
+    //
+    // If unspecified, defaults to INCLUSIVE_INCLUSIVE.
+    BoundTypes bound_types = 1;
+
+    // The minimum value of the range.
+    int64 min = 2;
+
+    // The maximum value of the range.
+    int64 max = 3;
+  }
+  // The valid ranges of values for the field.
+  repeated Range range = 3;
+}
+
+// Validation information for uint32 fields.
+message UInt32Rules {
+  // A human-readable description of the requirements on values of the field.
+  string description = 1;
+
+  // Sample valid values for the field.
+  //
+  // These may be used in documentation, generated sample code snippets, etc.
+  repeated uint32 sample_values = 2;
+
+  message Range {
+    // The type of boundaries used for the range.
+    //
+    // If unspecified, defaults to INCLUSIVE_INCLUSIVE.
+    BoundTypes bound_types = 1;
+
+    // The minimum value of the range.
+    uint32 min = 2;
+
+    // The maximum value of the range.
+    uint32 max = 3;
+  }
+  // The valid ranges of values for the field.
+  repeated Range range = 3;
+}
+
+// Validation information for uint64 fields.
+message UInt64Rules {
+  // A human-readable description of the requirements on values of the field.
+  string description = 1;
+
+  // Sample valid values for the field.
+  //
+  // These may be used in documentation, generated sample code snippets, etc.
+  repeated uint64 sample_values = 2;
+
+  message Range {
+    // The type of boundaries used for the range.
+    //
+    // If unspecified, defaults to INCLUSIVE_INCLUSIVE.
+    BoundTypes bound_types = 1;
+
+    // The minimum value of the range.
+    uint64 min = 2;
+
+    // The maximum value of the range.
+    uint64 max = 3;
+  }
+  // The valid ranges of values for the field.
+  repeated Range range = 3;
+}
+
+// Validation information for sint32 fields.
+message SInt32Rules {
+  // A human-readable description of the requirements on values of the field.
+  string description = 1;
+
+  // Sample valid values for the field.
+  //
+  // These may be used in documentation, generated sample code snippets, etc.
+  repeated sint32 sample_values = 2;
+
+  message Range {
+    // The type of boundaries used for the range.
+    //
+    // If unspecified, defaults to INCLUSIVE_INCLUSIVE.
+    BoundTypes bound_types = 1;
+
+    // The minimum value of the range.
+    sint32 min = 2;
+
+    // The maximum value of the range.
+    sint32 max = 3;
+  }
+  // The valid ranges of values for the field.
+  repeated Range range = 3;
+}
+
+// Validation information for sint64 fields.
+message SInt64Rules {
+  // A human-readable description of the requirements on values of the field.
+  string description = 1;
+
+  // Sample valid values for the field.
+  //
+  // These may be used in documentation, generated sample code snippets, etc.
+  repeated sint64 sample_values = 2;
+
+  message Range {
+    // The type of boundaries used for the range.
+    //
+    // If unspecified, defaults to INCLUSIVE_INCLUSIVE.
+    BoundTypes bound_types = 1;
+
+    // The minimum value of the range.
+    sint64 min = 2;
+
+    // The maximum value of the range.
+    sint64 max = 3;
+  }
+  // The valid ranges of values for the field.
+  repeated Range range = 3;
+}
+
+// Validation information for fixed32 fields.
+message Fixed32Rules {
+  // A human-readable description of the requirements on values of the field.
+  string description = 1;
+
+  // Sample valid values for the field.
+  //
+  // These may be used in documentation, generated sample code snippets, etc.
+  repeated fixed32 sample_values = 2;
+
+  message Range {
+    // The type of boundaries used for the range.
+    //
+    // If unspecified, defaults to INCLUSIVE_INCLUSIVE.
+    BoundTypes bound_types = 1;
+
+    // The minimum value of the range.
+    fixed32 min = 2;
+
+    // The maximum value of the range.
+    fixed32 max = 3;
+  }
+  // The valid ranges of values for the field.
+  repeated Range range = 3;
+}
+
+// Validation information for fixed64 fields.
+message Fixed64Rules {
+  // A human-readable description of the requirements on values of the field.
+  string description = 1;
+
+  // Sample valid values for the field.
+  //
+  // These may be used in documentation, generated sample code snippets, etc.
+  repeated fixed64 sample_values = 2;
+
+  message Range {
+    // The type of boundaries used for the range.
+    //
+    // If unspecified, defaults to INCLUSIVE_INCLUSIVE.
+    BoundTypes bound_types = 1;
+
+    // The minimum value of the range.
+    fixed64 min = 2;
+
+    // The maximum value of the range.
+    fixed64 max = 3;
+  }
+  // The valid ranges of values for the field.
+  repeated Range range = 3;
+}
+
+// Validation information for sfixed32 fields.
+message SFixed32Rules {
+  // A human-readable description of the requirements on values of the field.
+  string description = 1;
+
+  // Sample valid values for the field.
+  //
+  // These may be used in documentation, generated sample code snippets, etc.
+  repeated sfixed32 sample_values = 2;
+
+  message Range {
+    // The type of boundaries used for the range.
+    //
+    // If unspecified, defaults to INCLUSIVE_INCLUSIVE.
+    BoundTypes bound_types = 1;
+
+    // The minimum value of the range.
+    sfixed32 min = 2;
+
+    // The maximum value of the range.
+    sfixed32 max = 3;
+  }
+  // The valid ranges of values for the field.
+  repeated Range range = 3;
+}
+
+// Validation information for sfixed64 fields.
+message SFixed64Rules {
+  // A human-readable description of the requirements on values of the field.
+  string description = 1;
+
+  // Sample valid values for the field.
+  //
+  // These may be used in documentation, generated sample code snippets, etc.
+  repeated sfixed64 sample_values = 2;
+
+  message Range {
+    // The type of boundaries used for the range.
+    //
+    // If unspecified, defaults to INCLUSIVE_INCLUSIVE.
+    BoundTypes bound_types = 1;
+
+    // The minimum value of the range.
+    sfixed64 min = 2;
+
+    // The maximum value of the range.
+    sfixed64 max = 3;
+  }
+  // The valid ranges of values for the field.
+  repeated Range range = 3;
+}
+
+//
+// Non-numeric types.
+//
+
+// Validation information for string fields.
+message StringRules {
+  // A human-readable description of the requirements on values of the field.
+  string description = 1;
+
+  // Sample valid values for the field.
+  //
+  // These may be used in documentation, generated sample code snippets, etc.
+  repeated string sample_values = 2;
+
+  // Pattern specifes that this field must match against the specified regular
+  // expression (RE2 syntax). The included expression should elide any
+  // delimiters.
+  optional string pattern = 3;
+}
+
+// Validation information for boolean fields.
+message BooleanRules {
+  // A human-readable description of the requirements on values of the field.
+  string description = 1;
+
+  // Sample valid values for the field.
+  //
+  // These may be used in documentation, generated sample code snippets, etc.
+  repeated bool sample_values = 2;
+}

@@ -1,0 +1,196 @@
+syntax = "proto3";
+
+package organization.api_platform.api;
+
+import "google/protobuf/descriptor.proto";
+
+option java_multiple_files = true;
+option java_outer_classname = "MethodConfigurationProto";
+option java_package = "com.organization.api_platform.api";
+option go_package = "apis.organization.com/organization.api_platform.api";
+
+extend google.protobuf.MethodOptions {
+  // An object that contains extra metadata about an individual API method, like
+  // the resource a method is associated with.
+  //
+  // **NOTE:** This annotation is strictly needed for internal use cases.
+  MethodConfiguration method = 10493;
+}
+
+extend google.protobuf.MessageOptions {
+  // An object that contains extra metadata about an individual API method, like
+  // the resource a method is associated with.
+  //
+  // **NOTE:** This annotation is strictly needed for internal use cases.
+  RequestConfiguration request = 10494;
+}
+
+extend google.protobuf.MessageOptions {
+  // An object that contains extra metadata about an individual API message,
+  // like the resource a request or response is associated with.
+  //
+  // **NOTE:** This annotation is strictly needed for internal use cases.
+  ResponseConfiguration response = 10495;
+}
+
+// `MethodConfiguration` defines extra metadata around a specific API method.
+// This can be used for other parts of the API Platform self service pipeline,
+// like the API Linter and Documentation Generation tool.
+//
+//
+// Example:
+//
+//   rpc GetLibrarian(GetLibrarianRequest) returns (Librarian) {
+//     option (organization.api_platform.api.method) = {
+//       resource: { name: "Librarian" }
+//       get {}
+//     };
+//   }
+message MethodConfiguration {
+  // The resource with which a service method is associated.
+  Resource resource = 1;
+
+  // Extra metadata that can be associated with the different standard or custom
+  // methods
+  oneof method {
+    CreateMethod create = 2;
+    UpdateMethod update = 3;
+    DeleteMethod delete = 4;
+    ListMethod list = 5;
+    GetMethod get = 6;
+    BatchGetMethod batch_get = 8;
+    ListRevisionsMethod list_revisions = 7;
+    CustomMethod custom = 100;
+  }
+
+  // Visibility level
+  VisibilityLevel visibility = 9;
+
+  // The name of the BEDEV2 service that implements this method.
+  string service = 10;
+}
+
+// `RequestConfiguration` defines extra metadata around a specific API request
+// message. This can be used for other parts of the API Platform self service
+// pipeline, like the API Linter and Documentation Generation tool.
+//
+//
+// Example:
+//
+//   message GetLibrarianRequest {
+//     option (organization.api_platform.api.request) = {
+//       resource: { name: "Librarian" }
+//       get {}
+//     };
+//   }
+message RequestConfiguration {
+  // The resource with which a request message is associated.
+  Resource resource = 1;
+
+  // Extra metadata that can be associated with the different standard or custom
+  // methods
+  oneof method {
+    CreateMethod create = 2;
+    UpdateMethod update = 3;
+    DeleteMethod delete = 4;
+    ListMethod list = 5;
+    GetMethod get = 6;
+    BatchGetMethod batch_get = 8;
+    ListRevisionsMethod list_revisions = 7;
+    CustomMethod custom = 100;
+  }
+}
+
+// `ResponseConfiguration` defines extra metadata around a specific API response
+// message. This can be used for other parts of the API Platform self service
+// pipeline, like the API Linter and Documentation Generation tool.
+//
+//
+// Example:
+//
+//   message GetLibrarianResponse {
+//     option (organization.api_platform.api.response) = {
+//       resource: { name: "Librarian" }
+//       get {}
+//     };
+//   }
+message ResponseConfiguration {
+  // The resource with which a response message is associated.
+  Resource resource = 1;
+
+  // Extra metadata that can be associated with the different standard or custom
+  // methods
+  oneof method {
+    ListMethod list = 2;
+    ListRevisionsMethod list_revisions = 3;
+    BatchGetMethod batch_get = 4;
+    CustomMethod custom = 100;
+  }
+}
+
+// There are 4 main stability channels of an API:
+//
+// 1. Internal: Internal endpoints are not meant to be publicly accessible.
+//
+// 2. Alpha: Alpha releases are highly experimental and often contain numerous
+// bugs and issues.
+//    These releases are typically meant for internal testing and not for
+//    general use (behind a whitelist).
+//
+// 3. Beta: Beta releases are more stable than alpha versions but are still
+// considered pre-release.
+//    They are made available to a broader group of testers to identify and fix
+//    issues before a full release.
+//
+// 4. Stable: Stable releases are considered production-ready. They have
+// undergone extensive testing,
+//    and the software is believed to be reliable and free from major bugs.
+enum VisibilityLevel {
+  INTERNAL = 0;
+  ALPHA = 1;
+  BETA = 2;
+  STABLE = 3;
+}
+
+// `Resource` defines extra metadata around an API Platform resource associated
+// with a method
+message Resource {
+  // The singular name of the resource in PascalCase.
+  string name = 1;
+
+  // The plural name of the resource in PascalCase.
+  string plural_name = 2;
+}
+
+// `GetMethod` defines extra metadata around an API Platform 'Get' endpoint
+message GetMethod {}
+
+// `BatchGetMethod` defines extra metadata around an API Platform 'BatchGet'
+// endpoint
+message BatchGetMethod {}
+
+// `CreateMethod` defines extra metadata around an API Platform 'Create'
+// endpoint
+message CreateMethod {}
+
+// `UpdateMethod` defines extra metadata around an API Platform 'Update'
+// endpoint
+message UpdateMethod {}
+
+// `DeleteMethod` defines extra metadata around an API Platform 'Delete'
+// endpoint
+message DeleteMethod {}
+
+// `ListMethod` defines extra metadata around an API Platform 'List' endpoint
+message ListMethod {}
+
+// `ListMethod` defines extra metadata around an API Platform 'ListRevisions'
+// endpoint
+message ListRevisionsMethod {}
+
+// `CustomMethod` defines extra metadata around an API Platform 'Custom'
+// endpoint
+message CustomMethod {
+  // True if the method is collection-based.
+  bool collection_based = 1;
+}

@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package organization.api_platform.virtual_library.v1;
+
+import "buf/validate/validate.proto";
+import "google/api/field_behavior.proto";
+import "google/api/resource.proto";
+import "organization/api_platform/api/api_method.proto";
+import "organization/api_platform/api/field_validity.proto";
+
+import "organization/api_platform/virtual_library/v1/resources/librarian__resource.proto";
+
+option java_package = "com.organization.api_platform.virtual_library.v1";
+option java_multiple_files = true;
+option java_outer_classname = "SurveyLibrariansCustomMethodProto";
+option go_package = "apis.organization.com/organization.api_platform.virtual_library.v1";
+
+// Conduct a survey of all librarians.
+//
+// The survey is based on the questions in this request.
+message SurveyLibrariansRequest {
+  option (organization.api_platform.api.request) = {
+    resource: { name: "Librarian" }
+    custom { collection_based: true }
+  };
+
+  // Optional: add fields to your request
+}
+
+// Contains the results of the survey.
+message SurveyLibrariansResponse {
+  option (organization.api_platform.api.response) = {
+    resource: { name: "Librarian" }
+    custom { collection_based: true }
+  };
+
+  // TODO: add fields to your response
+}

@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package organization.api_platform.api;
+
+import "google/protobuf/descriptor.proto";
+
+option java_multiple_files = true;
+option java_outer_classname = "DocumentationMetadataProto";
+option java_package = "com.organization.api_platform.api";
+option go_package = "apis.organization.com/organization.api_platform.api";
+
+extend google.protobuf.MessageOptions {
+  // An object that contains extra documentation-specific metadata about an API
+  // resource.
+  DocumentationMetadata documentation_metadata = 10496;
+}
+
+// Documentation-specific metadata about an API resource.
+message DocumentationMetadata {
+  // The category of the resource.
+  //
+  // This can be used to group resources in generated documentation.
+  string category = 1;
+}

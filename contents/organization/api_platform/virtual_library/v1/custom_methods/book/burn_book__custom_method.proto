@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package organization.api_platform.virtual_library.v1;
+
+import "buf/validate/validate.proto";
+import "google/api/field_behavior.proto";
+import "google/api/resource.proto";
+import "organization/api_platform/api/api_method.proto";
+import "organization/api_platform/api/field_validity.proto";
+
+import "organization/api_platform/virtual_library/v1/resources/book__resource.proto";
+
+option java_package = "com.organization.api_platform.virtual_library.v1";
+option java_multiple_files = true;
+option java_outer_classname = "BurnBookCustomMethodProto";
+option go_package = "apis.organization.com/organization.api_platform.virtual_library.v1";
+
+// Burn the book.
+message BurnBookRequest {
+  option (organization.api_platform.api.request) = {
+    resource: { name: "Book" }
+    custom {}
+  };
+
+  // The path of the book.
+  //
+  // Format: `publishers/{publisher}/books/{book}`
+  string path = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference) = {
+      type: "apis.organization.com/virtual-library/Book"
+    },
+    (organization.api_platform.api.field_validity).string = {
+      sample_values: "publishers/some-publisher-id/books/ready-player-one"
+    },
+    (buf.validate.field).string = {
+      pattern: "(^publishers/([a-z]([a-z0-9-]{0,61}[a-z0-9])?)/books/(([a-z]([a-z0-9-]{0,61}[a-z0-9])?)|([a-z]([a-z0-9-]{0,61}[a-z0-9])?))(@[0-9a-f]{15})?$)"
+    }
+  ];
+
+  // Optional: add fields to your request
+}

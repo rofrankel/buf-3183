@@ -1,0 +1,111 @@
+syntax = "proto3";
+
+package organization.api_platform.virtual_library.v1;
+
+import "buf/validate/validate.proto";
+import "google/api/field_behavior.proto";
+import "google/api/resource.proto";
+import "google/protobuf/timestamp.proto";
+import "organization/api_platform/api/documentation_metadata.proto";
+import "organization/api_platform/api/field_validity.proto";
+
+option java_package = "com.organization.api_platform.virtual_library.v1";
+option java_multiple_files = true;
+option java_outer_classname = "BookResourceProto";
+option go_package = "apis.organization.com/organization.api_platform.virtual_library.v1";
+
+// Represents a book.
+//
+// A book is a a written or printed work consisting of pages glued or sewn
+// together along one side and bound in covers.
+message Book {
+  option (google.api.resource) = {
+    type: "apis.organization.com/virtual-library/Book"
+    pattern: "publishers/{publisher}/books/{book}"
+    name_field: "path"
+  };
+  option (organization.api_platform.api.documentation_metadata) = {
+    category: "cloud"
+  };
+
+  // The resource path of the book.
+  //
+  // Format: `publishers/{publisher}/books/{book}`
+  string path = 1 [
+    (organization.api_platform.api.field_validity).string = {
+      sample_values: "publishers/some-publisher-id/books/ready-player-one"
+    },
+    (buf.validate.field).string = {
+      pattern: "(^publishers/([a-z]([a-z0-9-]{0,61}[a-z0-9])?)/books/(([a-z]([a-z0-9-]{0,61}[a-z0-9])?)|([a-z]([a-z0-9-]{0,61}[a-z0-9])?))(@[0-9a-f]{15})?$)"
+    }
+  ];
+
+  // The timestamp when the book was created.
+  google.protobuf.Timestamp create_time = 2
+      [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // The timestamp when the book was last updated.
+  google.protobuf.Timestamp update_time = 3
+      [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // The revision ID of the book.
+  //
+  // A new revision is committed whenever the book is changed in any way.
+  //
+  // The format is a 15-character hexadecimal string.
+  // Example: "c00ld00dbeefb01"
+  string revision_id = 4 [
+    (google.api.field_behavior) = IMMUTABLE,
+    (google.api.field_behavior) = OUTPUT_ONLY
+  ];
+
+  // The timestamp when the revision was created.
+  google.protobuf.Timestamp revision_create_time = 5
+      [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // Different views of a book.
+  enum View {
+    // The book view is not specified; the default will be used.
+    VIEW_UNSPECIFIED = 0;
+
+    // Includes only the `title` and `author` fields.
+    BASIC = 1;
+
+    // Includes the following fields:
+    //
+    // * title
+    // * author
+    // * description
+    BASIC_WITH_DESCRIPTION = 2;
+
+    // Includes all fields.
+    FULL = 3;
+  }
+
+  // The state of a book.
+  //
+  // Code that checks the value of this enum should assume that new states may
+  // be added in the future.
+  enum State {
+    // The default value. This value is used if the state is omitted.
+    STATE_UNSPECIFIED = 0;
+
+    // The default state of a newly created book.
+    ACTIVE = 1;
+
+    // The book is marked as deleted.
+    //
+    // At some point in the future, it will be permanently deleted.
+    DELETED = 2;
+  }
+  // The state of the book.
+  State state = 98 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // This checksum is computed by the server based on the value of other
+  // fields, and may be sent on update and delete requests (and potentially
+  // on certain custom methods) to ensure the client has an up-to-date
+  // value before proceeding.
+  string etag = 99;
+
+  // TODO: add fields to your resource
+}

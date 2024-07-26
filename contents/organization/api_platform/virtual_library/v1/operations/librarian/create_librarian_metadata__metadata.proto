@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package organization.api_platform.virtual_library.v1;
+
+option java_package = "com.organization.api_platform.virtual_library.v1";
+option java_multiple_files = true;
+option java_outer_classname = "CreateLibrarianMetadataMetadataProto";
+option go_package = "apis.organization.com/organization.api_platform.virtual_library.v1";
+
+// Represents metadata about the long-running operation corresponding to a
+// CreateLibrarian request.
+//
+// This is the type of the `Operation.metadata` field in the response to
+// `GetOperation` requests for CreateLibrarian operations.
+message CreateLibrarianMetadata {
+  // This message is empty for now, and can remain empty indefinitely, but you
+  // can also add fields to it if you need to.
+}
